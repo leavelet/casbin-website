@@ -27,8 +27,6 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-      - name: add safe
-        run: git config --global --add safe.directory /github/workspace
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
@@ -39,6 +37,7 @@ jobs:
         run: |
           git config --global user.name "${GH_NAME}"
           git config --global user.email "${GH_EMAIL}"
+          git config --global --add safe.directory /github/workspace
           echo "machine github.com login ${GH_NAME} password ${GH_TOKEN}" > ~/.netrc
           cd website && yarn install && yarn run write-translations && cd ..
 
